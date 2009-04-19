@@ -1,0 +1,12 @@
+TODO items for the beta release:
+
+     * Use separate dirs for ghc (Root\ghc) and the Haskell platform
+       (PF\Haskell)
+
+     * Set registry keys and associations (see ghc.iss)
+
+     * Set the PATH variable (see ghc.iss)
+
+     * Modify GHC_DIR/package.conf to point to where packages are installed.
+
+     * Icon for the installer
