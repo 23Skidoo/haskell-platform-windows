@@ -8,7 +8,7 @@ TODO items for the beta release:
 
      * Modify GHC_DIR/package.conf to point to where packages are installed.
 
-     * Look through text.
+     * Check that text messages are ok.
 
 Postponed TODO items:
 
