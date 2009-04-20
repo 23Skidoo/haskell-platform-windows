@@ -1,4 +1,3 @@
-* Do not call RMDir on the whole platform dir (unsafe, cabal-install puts
-  packages there by default).
+* Track installed files precisely (RMDir /r is unsafe).
 
 * Bundle OpenAL redist, also probably GLUT.
