@@ -1,3 +1,7 @@
 * Track installed files precisely (RMDir /r is unsafe).
 
 * Bundle OpenAL redist, also probably GLUT.
+
+* Branding: it would be nice to have icons with the new logo, also for .hs and
+  .lhs files (probably even for the intermediate GHC files, like Python does for
+  .pyc)
