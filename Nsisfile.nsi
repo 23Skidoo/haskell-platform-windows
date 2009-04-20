@@ -7,6 +7,8 @@
 
   !include "MUI2.nsh"
   !include "EnvVarUpdate.nsh"
+  !include "StrRep.nsh"
+  !include "ReplaceInFile.nsh"
 
 ;--------------------------------
 ;Defines
@@ -137,7 +139,11 @@ Section "Main" SecMain
   WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\HaskellPlatform-${PLATFORM_VERSION}" \
   "Publisher" "Haskell.org"
 
-  ; TODO: Modify $INSTDIR\package.conf to point to $PLATFORMDIR
+  ; Modify $INSTDIR\package.conf to point to $PLATFORMDIR
+  ${StrReplace} '$0' '\' '_' '$PLATFORMDIR'
+  ${StrReplace} '$0' '_' '\\' '$0'
+  !insertmacro ReplaceInFile "$INSTDIR\package.conf" "@PLATFORM_DIR@" $0
+  Delete "$INSTDIR\package.conf.old"
 
   ; Update PATH
   ${EnvVarUpdate} $0 "PATH" "A" "HKLM" "$INSTDIR\bin"
