@@ -28,17 +28,13 @@
 Function .onInit
   SetShellVarContext all
   StrCpy $SYSTEM_DRIVE $WINDIR 2
-  StrCpy $INSTDIR "$SYSTEM_DRIVE\ghc\${GHC_VERSION}"
+  StrCpy $INSTDIR "$SYSTEM_DRIVE\ghc"
   StrCpy $PLATFORMDIR "$PROGRAMFILES\Haskell"
   StrCpy $START_MENU_FOLDER "GHC"
 FunctionEnd
 
 Function un.onInit
   SetShellVarContext all
-  StrCpy $SYSTEM_DRIVE $WINDIR 2
-  StrCpy $INSTDIR "$SYSTEM_DRIVE\ghc\${GHC_VERSION}"
-  StrCpy $PLATFORMDIR "$PROGRAMFILES\Haskell"
-  StrCpy $START_MENU_FOLDER "GHC"
 FunctionEnd
 
 ;--------------------------------
@@ -101,11 +97,16 @@ Section "Main" SecMain
   SetOutPath "$PLATFORMDIR"
   File /r "extralibs\*"
 
-  ; Set registry keys
+  ; Registry keys
+  WriteRegStr HKLM "Software\Haskell\HaskellPlatform-${PLATFORM_VERSION}" "GHCInstallDir" "$INSTDIR"
+  WriteRegStr HKLM "Software\Haskell\HaskellPlatform-${PLATFORM_VERSION}" "PlatformInstallDir" "$PLATFORMDIR"
+
+  StrCpy $INSTDIR "$INSTDIR\ghc-${GHC_VERSION}"
+  ; Copied from the GHC installer.
   WriteRegStr HKCU "Software\Haskell\GHC\ghc-${GHC_VERSION}" "InstallDir" "$INSTDIR"
   WriteRegStr HKCU "Software\Haskell\GHC" "InstallDir" "$INSTDIR"
 
-  ; Set associations
+  ; Associations
   WriteRegStr HKCR ".hs" "" "ghc_haskell"
   WriteRegStr HKCR ".lhs" "" "ghc_haskell"
   WriteRegStr HKCR "ghc_haskell" "" "Haskell Source File"
@@ -167,8 +168,10 @@ Section "Uninstall"
 
   ; TODO: Uninstall only installed files
   ; TOLOOKAT: http://nsis.sourceforge.net/Advanced_Uninstall_Log_NSIS_Header
-  RMDir /r "$INSTDIR"
-  RMDir /r "$PLATFORMDIR"
+  ReadRegStr $0 HKLM "Software\Haskell\HaskellPlatform-${PLATFORM_VERSION}" "GHCInstallDir"
+  RMDir /r "$0"
+  ReadRegStr $0 HKLM "Software\Haskell\HaskellPlatform-${PLATFORM_VERSION}" "PlatformInstallDir"
+  RMDir /r "$0"
 
   ; Delete start menu shortcuts
   !insertmacro MUI_STARTMENU_GETFOLDER StartMenuPage $START_MENU_FOLDER
@@ -185,6 +188,7 @@ Section "Uninstall"
   DeleteRegKey HKCR ".lhs"
   DeleteRegKey HKCR "ghc_haskell"
   DeleteRegKey HKCU "Software\Haskell\GHC"
+  DeleteRegKey HKLM "Software\Haskell\HaskellPlatform-${PLATFORM_VERSION}"
   DeleteRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\HaskellPlatform-${PLATFORM_VERSION}"
 
 SectionEnd
