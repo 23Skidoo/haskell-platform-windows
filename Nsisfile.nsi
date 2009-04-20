@@ -7,8 +7,8 @@
 
   !include "MUI2.nsh"
   !include "EnvVarUpdate.nsh"
-  !include "StrRep.nsh"
-  !include "ReplaceInFile.nsh"
+  !include "WordFunc.nsh"
+  !include "TextFunc.nsh"
 
 ;--------------------------------
 ;Defines
@@ -29,13 +29,17 @@
 Function .onInit
   SetShellVarContext all
   StrCpy $SYSTEM_DRIVE $WINDIR 2
-  StrCpy $INSTDIR "$SYSTEM_DRIVE\ghc"
+  StrCpy $INSTDIR "$SYSTEM_DRIVE\ghc\${GHC_VERSION}"
   StrCpy $PLATFORMDIR "$PROGRAMFILES\Haskell"
   StrCpy $START_MENU_FOLDER "GHC"
 FunctionEnd
 
 Function un.onInit
   SetShellVarContext all
+FunctionEnd
+
+Function LineFindCallback
+  ${WordReplace} '$R9' '@PLATFORMDIR@' '$PLATFORMDIR' '+' $R9
 FunctionEnd
 
 ;--------------------------------
@@ -140,10 +144,8 @@ Section "Main" SecMain
   "Publisher" "Haskell.org"
 
   ; Modify $INSTDIR\package.conf to point to $PLATFORMDIR
-  ${StrReplace} '$0' '\' '_' '$PLATFORMDIR'
-  ${StrReplace} '$0' '_' '\\' '$0'
-  !insertmacro ReplaceInFile "$INSTDIR\package.conf" "@PLATFORM_DIR@" $0
-  Delete "$INSTDIR\package.conf.old"
+  ${WordReplace} "$PLATFORMDIR" "\" "\\" "+" $R1
+  ${LineFind} "$INSTDIR\package.conf" "" "1:-1" "LineFindCallback"
 
   ; Update PATH
   ${EnvVarUpdate} $0 "PATH" "A" "HKLM" "$INSTDIR\bin"
@@ -159,8 +161,6 @@ SectionEnd
 ;Uninstaller Section
 
 Section "Uninstall"
-
-  ;ADD YOUR OWN FILES HERE...
 
   Delete "$INSTDIR\Uninstall.exe"
 
