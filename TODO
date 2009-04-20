@@ -1,14 +1,4 @@
-TODO items for the beta release:
+* Do not call RMDir on the whole platform dir (unsafe, cabal-install puts
+  packages there by default).
 
-     * Set the PATH variable (see ghc.iss)
-
-     * Modify GHC_DIR/package.conf to point to where packages are installed.
-
-     * Check that text messages are ok.
-
-TODO items for the next release:
-
-     * Do not call RMDir on the whole platform dir (unsafe, cabal-install puts
-       packages there by default).
-
-     * Bundle OpenAL redist, also probably GLUT.
+* Bundle OpenAL redist, also probably GLUT.
