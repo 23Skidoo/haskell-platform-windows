@@ -3,9 +3,10 @@
 ;Written by Joost Verburg
 
 ;--------------------------------
-;Include Modern UI
+;Includes
 
   !include "MUI2.nsh"
+  !include "EnvVarUpdate.nsh"
 
 ;--------------------------------
 ;Defines
@@ -132,11 +133,16 @@ Section "Main" SecMain
   WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\HaskellPlatform-${PLATFORM_VERSION}" \
   "UninstallString" "$\"$INSTDIR\Uninstall.exe$\""
   WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\HaskellPlatform-${PLATFORM_VERSION}" \
+  "DisplayIcon" "$INSTDIR\icons\installer.ico"
+  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\HaskellPlatform-${PLATFORM_VERSION}" \
   "Publisher" "Haskell.org"
 
-  ; TODO: Modify $INSTDIR\package.conf to point to $PLATFORM_DIR
+  ; TODO: Modify $INSTDIR\package.conf to point to $PLATFORMDIR
 
-  ; TODO: Update PATH
+  ; Update PATH
+  ${EnvVarUpdate} $0 "PATH" "A" "HKLM" "$INSTDIR\bin"
+  ${EnvVarUpdate} $0 "PATH" "A" "HKLM" "$PLATFORMDIR\bin"
+  ${EnvVarUpdate} $0 "PATH" "A" "HKLM" "$PROGRAMFILES\Haskell\bin"
 
   ;Create uninstaller
   WriteUninstaller "$INSTDIR\Uninstall.exe"
