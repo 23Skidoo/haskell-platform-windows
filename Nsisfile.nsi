@@ -8,7 +8,6 @@
   !include "MUI2.nsh"
   !include "EnvVarUpdate.nsh"
   !include "WordFunc.nsh"
-  !include "TextFunc.nsh"
 
 ;--------------------------------
 ;Defines
@@ -36,10 +35,10 @@ FunctionEnd
 
 Function un.onInit
   SetShellVarContext all
-FunctionEnd
-
-Function LineFindCallback
-  ${WordReplace} '$R9' '@PLATFORMDIR@' '$PLATFORMDIR' '+' $R9
+  StrCpy $SYSTEM_DRIVE $WINDIR 2
+  StrCpy $INSTDIR "$SYSTEM_DRIVE\ghc\${GHC_VERSION}"
+  StrCpy $PLATFORMDIR "$PROGRAMFILES\Haskell"
+  StrCpy $START_MENU_FOLDER "GHC"
 FunctionEnd
 
 ;--------------------------------
@@ -97,10 +96,10 @@ FunctionEnd
 Section "Main" SecMain
 
   SetOutPath "$INSTDIR"
-  File /r ghc\*
+  File /r "ghc\*"
 
   SetOutPath "$PLATFORMDIR"
-  File /r extralibs\*
+  File /r "extralibs\*"
 
   ; Set registry keys
   WriteRegStr HKCU "Software\Haskell\GHC\ghc-${GHC_VERSION}" "InstallDir" "$INSTDIR"
@@ -144,8 +143,10 @@ Section "Main" SecMain
   "Publisher" "Haskell.org"
 
   ; Modify $INSTDIR\package.conf to point to $PLATFORMDIR
-  ${WordReplace} "$PLATFORMDIR" "\" "\\" "+" $R1
-  ${LineFind} "$INSTDIR\package.conf" "" "1:-1" "LineFindCallback"
+  ${WordReplace} "$PLATFORMDIR" "\" "\\\\" "+" $R1
+  ExecDos::exec '"$INSTDIR\perl.exe" -p -e "s/\@PLATFORMDIR\@/$R1/g" "$INSTDIR\package.conf"' "" "$INSTDIR\package.conf.new"
+  Delete "$INSTDIR\package.conf"
+  Rename "$INSTDIR\package.conf.new" "$INSTDIR\package.conf"
 
   ; Update PATH
   ${EnvVarUpdate} $0 "PATH" "A" "HKLM" "$INSTDIR\bin"
