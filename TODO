@@ -1,18 +1,14 @@
 TODO items for the beta release:
 
-     * Set registry keys and associations (see ghc.iss)
-
      * Set the PATH variable (see ghc.iss)
-
-     * Add uninstall information to Add/Remove Programs
 
      * Modify GHC_DIR/package.conf to point to where packages are installed.
 
      * Check that text messages are ok.
 
-Postponed TODO items:
+TODO items for the next release:
 
-     * Do not call RMDir on the whole platform dir (cabal-install puts packages
-       there by default).
+     * Do not call RMDir on the whole platform dir (unsafe, cabal-install puts
+       packages there by default).
 
-     * Bundle OpenAL redist. (?)
+     * Bundle OpenAL redist, also probably GLUT.
