@@ -61,10 +61,12 @@ FunctionEnd
   !insertmacro MUI_PAGE_WELCOME
 
   ; TODO: fix text messages
-  !Define MUI_DIRECTORYPAGE_TEXT_TOP "GHC directory"
+  !Define MUI_PAGE_HEADER_SUBTEXT "Step 1 of 2."
+  !Define MUI_DIRECTORYPAGE_TEXT_TOP "Choose the folder in which to install GHC."
   !insertmacro MUI_PAGE_DIRECTORY
 
-  !Define MUI_DIRECTORYPAGE_TEXT_TOP "Haskell Platform directory"
+  !Define MUI_PAGE_HEADER_SUBTEXT "Step 2 of 2."
+  !Define MUI_DIRECTORYPAGE_TEXT_TOP "Choose the folder in which to install extra libraries provided by the Haskell Platform."
   !Define MUI_DIRECTORYPAGE_VARIABLE $PLATFORMDIR
   !insertmacro MUI_PAGE_DIRECTORY
 
