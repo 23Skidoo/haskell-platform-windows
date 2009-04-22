@@ -30,7 +30,6 @@ Function .onInit
   StrCpy $SYSTEM_DRIVE $WINDIR 2
   StrCpy $INSTDIR "$SYSTEM_DRIVE\ghc"
   StrCpy $PLATFORMDIR "$PROGRAMFILES\Haskell"
-  StrCpy $START_MENU_FOLDER "GHC"
 FunctionEnd
 
 Function un.onInit
@@ -79,6 +78,7 @@ FunctionEnd
   !Define MUI_STARTMENUPAGE_REGISTRY_ROOT "HKLM"
   !Define MUI_STARTMENUPAGE_REGISTRY_KEY "Software\Haskell\GHC\ghc-${GHC_VERSION}"
   !Define MUI_STARTMENUPAGE_REGISTRY_VALUENAME "Start Menu Folder"
+  !Define MUI_STARTMENUPAGE_DEFAULTFOLDER "GHC"
   !insertmacro MUI_PAGE_STARTMENU StartMenuPage $START_MENU_FOLDER
   !insertmacro MUI_PAGE_INSTFILES
   !insertmacro MUI_PAGE_FINISH
