@@ -50,6 +50,9 @@ FunctionEnd
   ;Request application privileges for Windows Vista
   RequestExecutionLevel admin
 
+  ; Best available compression
+  SetCompressor /SOLID lzma
+
 ;--------------------------------
 ;Interface Settings
 
@@ -71,6 +74,7 @@ FunctionEnd
   !insertmacro MUI_PAGE_DIRECTORY
 
   ;Start Menu Folder Page Configuration
+  ;!Define MUI_STARTMENUPAGE_TEXT_TOP "Choose the Start Menu folder for GHC shortcuts."
   !Define MUI_STARTMENUPAGE_REGISTRY_ROOT "HKLM"
   !Define MUI_STARTMENUPAGE_REGISTRY_KEY "Software\Haskell\GHC\ghc-${GHC_VERSION}"
   !Define MUI_STARTMENUPAGE_REGISTRY_VALUENAME "Start Menu Folder"
