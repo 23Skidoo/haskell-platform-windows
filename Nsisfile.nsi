@@ -11,7 +11,7 @@
 ;Defines
 
   !Define GHC_VERSION "6.10.2"
-  !Define PLATFORM_VERSION "2009.0.0"
+  !Define PLATFORM_VERSION "2009.2.0"
 
 ;--------------------------------
 ;Variables
