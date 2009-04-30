@@ -59,6 +59,7 @@ FunctionEnd
 ;--------------------------------
 ;Pages
 
+  !Define MUI_WELCOMEFINISHPAGE_BITMAP "welcome.bmp"
   !insertmacro MUI_PAGE_WELCOME
 
   ; TODO: fix text messages
