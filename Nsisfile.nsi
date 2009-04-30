@@ -43,6 +43,7 @@ FunctionEnd
 
   ;Icon
   !Define MUI_ICON "installer.ico"
+  !Define MUI_UNICON "${NSISDIR}\Contrib\Graphics\Icons\orange-uninstall.ico"
 
   ;Request application privileges for Windows Vista
   RequestExecutionLevel admin
