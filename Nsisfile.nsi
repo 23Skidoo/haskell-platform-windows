@@ -1,6 +1,4 @@
-;NSIS Modern User Interface
-;Welcome/Finish Page Example Script
-;Written by Joost Verburg
+; Haskell Platform Installer
 
 ;--------------------------------
 ;Includes
