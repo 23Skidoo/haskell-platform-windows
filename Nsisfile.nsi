@@ -48,8 +48,12 @@ FunctionEnd
   ;Request application privileges for Windows Vista
   RequestExecutionLevel admin
 
-  ; Best available compression
+  ;Best available compression
   SetCompressor /SOLID lzma
+
+  ;Install types
+  InstType "Normal"
+  InstType "Just unpack the files"
 
 ;--------------------------------
 ;Interface Settings
@@ -62,6 +66,9 @@ FunctionEnd
   !Define MUI_WELCOMEFINISHPAGE_BITMAP "welcome.bmp"
   !insertmacro MUI_PAGE_WELCOME
   !insertmacro MUI_PAGE_DIRECTORY
+
+  !Define MUI_COMPONENTSPAGE_NODESC
+  !insertmacro MUI_PAGE_COMPONENTS
 
   ;Start Menu Folder Page Configuration
   !Define MUI_PAGE_HEADER_SUBTEXT "Choose a Start Menu folder for the GHC ${GHC_VERSION} shortcuts."
@@ -87,7 +94,11 @@ FunctionEnd
 ;--------------------------------
 ;Installer Sections
 
-Section "Main" SecMain
+Section "Base components" SecMain
+
+  SectionIn 1 2
+  ; Make this section mandatory
+  SectionIn RO
 
   StrCpy $GHC_DIR "$INSTDIR\ghc"
   StrCpy $PLATFORMDIR "$INSTDIR\extralibs"
@@ -98,10 +109,22 @@ Section "Main" SecMain
   SetOutPath "$PLATFORMDIR"
   File /r "extralibs\*"
 
-  ; Registry keys
-  WriteRegStr HKLM "Software\Haskell\HaskellPlatform-${PLATFORM_VERSION}" "PlatformInstallDir" "$INSTDIR"
+  ; Modify $GHC_DIR\package.conf to point to $PLATFORMDIR
+  ${WordReplace} "$PLATFORMDIR" "\" "\\\\" "+" $R1
+  ExecDos::exec '"$GHC_DIR\perl.exe" -p -e "s/\@PLATFORMDIR\@/$R1/g" "$GHC_DIR\package.conf"' "" "$GHC_DIR\package.conf.new"
+  Delete "$GHC_DIR\package.conf"
+  Rename "$GHC_DIR\package.conf.new" "$GHC_DIR\package.conf"
 
-  ; Copied from the GHC installer.
+SectionEnd
+
+SectionGroup "Update system settings" SecGr
+
+Section "Associate .hs/.lhs files with GHCi" SecAssoc
+
+  SectionIn 1
+
+  ; Write information about GHC's location to registry
+  ; (copied from the GHC installer).
   WriteRegStr HKCU "Software\Haskell\GHC\ghc-${GHC_VERSION}" "InstallDir" "$GHC_DIR"
   WriteRegStr HKCU "Software\Haskell\GHC" "InstallDir" "$GHC_DIR"
 
@@ -111,6 +134,46 @@ Section "Main" SecMain
   WriteRegStr HKCR "ghc_haskell" "" "Haskell Source File"
   WriteRegStr HKCR "ghc_haskell\DefaultIcon" "" "$GHC_DIR\icons\hsicon.ico"
   WriteRegStr HKCR "ghc_haskell\shell\open\command" "" '"$GHC_DIR\bin\ghci.exe" "%1"'
+
+SectionEnd
+
+Section "Update the PATH environment variable" SecPath
+
+  SectionIn 1
+
+  ; Update PATH
+  ${EnvVarUpdate} $0 "PATH" "A" "HKLM" "$GHC_DIR\bin"
+  ${EnvVarUpdate} $0 "PATH" "A" "HKLM" "$PLATFORMDIR\bin"
+  ${EnvVarUpdate} $0 "PATH" "A" "HKLM" "$PROGRAMFILES\Haskell\bin"
+
+SectionEnd
+
+Section "Create uninstaller" SecAddRem
+
+  SectionIn 1
+
+  ; Add uninstall information to Add/Remove Programs
+  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\HaskellPlatform-${PLATFORM_VERSION}" \
+  "DisplayName" "Haskell Platform ${PLATFORM_VERSION}"
+  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\HaskellPlatform-${PLATFORM_VERSION}" \
+  "UninstallString" "$\"$INSTDIR\Uninstall.exe$\""
+  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\HaskellPlatform-${PLATFORM_VERSION}" \
+  "DisplayIcon" "$GHC_DIR\icons\installer.ico"
+  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\HaskellPlatform-${PLATFORM_VERSION}" \
+  "Publisher" "Haskell.org"
+
+  ;Create uninstaller
+  WriteUninstaller "$INSTDIR\Uninstall.exe"
+
+  ; This is needed for uninstaller to work
+  WriteRegStr HKLM "Software\Haskell\HaskellPlatform-${PLATFORM_VERSION}" "PlatformInstallDir" "$INSTDIR"
+
+SectionEnd
+
+SectionGroupEnd
+
+Section "-StartMenu" StartMenu
+  SectionIn 1 2
 
   ; Add start menu shortcuts
 
@@ -132,30 +195,6 @@ Section "Main" SecMain
 
   !insertmacro MUI_STARTMENU_WRITE_END
 
-  ; Add uninstall information to Add/Remove Programs
-  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\HaskellPlatform-${PLATFORM_VERSION}" \
-  "DisplayName" "Haskell Platform ${PLATFORM_VERSION}"
-  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\HaskellPlatform-${PLATFORM_VERSION}" \
-  "UninstallString" "$\"$INSTDIR\Uninstall.exe$\""
-  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\HaskellPlatform-${PLATFORM_VERSION}" \
-  "DisplayIcon" "$GHC_DIR\icons\installer.ico"
-  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\HaskellPlatform-${PLATFORM_VERSION}" \
-  "Publisher" "Haskell.org"
-
-  ; Modify $GHC_DIR\package.conf to point to $PLATFORMDIR
-  ${WordReplace} "$PLATFORMDIR" "\" "\\\\" "+" $R1
-  ExecDos::exec '"$GHC_DIR\perl.exe" -p -e "s/\@PLATFORMDIR\@/$R1/g" "$GHC_DIR\package.conf"' "" "$GHC_DIR\package.conf.new"
-  Delete "$GHC_DIR\package.conf"
-  Rename "$GHC_DIR\package.conf.new" "$GHC_DIR\package.conf"
-
-  ; Update PATH
-  ${EnvVarUpdate} $0 "PATH" "A" "HKLM" "$GHC_DIR\bin"
-  ${EnvVarUpdate} $0 "PATH" "A" "HKLM" "$PLATFORMDIR\bin"
-  ${EnvVarUpdate} $0 "PATH" "A" "HKLM" "$PROGRAMFILES\Haskell\bin"
-
-  ;Create uninstaller
-  WriteUninstaller "$INSTDIR\Uninstall.exe"
-
 SectionEnd
 
 ;--------------------------------
@@ -163,10 +202,14 @@ SectionEnd
 
 Section "Uninstall"
 
+  StrCpy $GHC_DIR "$INSTDIR\ghc"
+  StrCpy $PLATFORMDIR "$INSTDIR\extralibs"
+
   Delete "$INSTDIR\Uninstall.exe"
 
   ; TODO: Uninstall only installed files
   ; TOLOOKAT: http://nsis.sourceforge.net/Advanced_Uninstall_Log_NSIS_Header
+  ; TODO: RmDir $INSTDIR\..
   ReadRegStr $0 HKLM "Software\Haskell\HaskellPlatform-${PLATFORM_VERSION}" "PlatformInstallDir"
   RMDir /r "$0"
 
@@ -187,5 +230,9 @@ Section "Uninstall"
   DeleteRegKey HKCU "Software\Haskell\GHC"
   DeleteRegKey HKLM "Software\Haskell\HaskellPlatform-${PLATFORM_VERSION}"
   DeleteRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\HaskellPlatform-${PLATFORM_VERSION}"
+
+  ; Update PATH
+  ${un.EnvVarUpdate} $0 "PATH" "R" "HKLM" "$GHC_DIR\bin"
+  ${un.EnvVarUpdate} $0 "PATH" "R" "HKLM" "$PLATFORMDIR\bin"
 
 SectionEnd
