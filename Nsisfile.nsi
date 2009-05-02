@@ -3,9 +3,10 @@
 ;--------------------------------
 ;Includes
 
-  !Include "MUI2.nsh"
   !Include "EnvVarUpdate.nsh"
   !Include "FileFunc.nsh"
+  !Include "LogicLib.nsh"
+  !Include "MUI2.nsh"
   !Include "WordFunc.nsh"
 
 ;--------------------------------
@@ -117,6 +118,11 @@ Section "Base components" SecMain
   Delete "$GHC_DIR\package.conf"
   Rename "$GHC_DIR\package.conf.new" "$GHC_DIR\package.conf"
 
+  ; Write information about GHC's location to registry
+  ; (copied from the GHC installer).
+  WriteRegStr HKCU "Software\Haskell\GHC\ghc-${GHC_VERSION}" "InstallDir" "$GHC_DIR"
+  WriteRegStr HKCU "Software\Haskell\GHC" "InstallDir" "$GHC_DIR"
+
 SectionEnd
 
 SectionGroup "Update system settings" SecGr
@@ -125,17 +131,15 @@ Section "Associate .hs/.lhs files with GHCi" SecAssoc
 
   SectionIn 1
 
-  ; Write information about GHC's location to registry
-  ; (copied from the GHC installer).
-  WriteRegStr HKCU "Software\Haskell\GHC\ghc-${GHC_VERSION}" "InstallDir" "$GHC_DIR"
-  WriteRegStr HKCU "Software\Haskell\GHC" "InstallDir" "$GHC_DIR"
-
   ; File associations
   WriteRegStr HKCR ".hs" "" "ghc_haskell"
   WriteRegStr HKCR ".lhs" "" "ghc_haskell"
   WriteRegStr HKCR "ghc_haskell" "" "Haskell Source File"
   WriteRegStr HKCR "ghc_haskell\DefaultIcon" "" "$GHC_DIR\icons\hsicon.ico"
   WriteRegStr HKCR "ghc_haskell\shell\open\command" "" '"$GHC_DIR\bin\ghci.exe" "%1"'
+
+  ;Remember that we registered associations
+  WriteRegDWORD HKLM "${PRODUCT_DIR_REG_KEY}" Assocs 0x1
 
 SectionEnd
 
@@ -229,10 +233,14 @@ Section "Uninstall"
   RMDir "$SMPROGRAMS\$START_MENU_FOLDER\"
 
   ; Delete registry keys
-  ; TODO: should be optional
-  DeleteRegKey HKCR ".hs"
-  DeleteRegKey HKCR ".lhs"
-  DeleteRegKey HKCR "ghc_haskell"
+  ReadRegDWORD $0 HKLM "${PRODUCT_DIR_REG_KEY}" Assocs
+
+  ${If} $0 == 0x1
+    DeleteRegKey HKCR ".hs"
+    DeleteRegKey HKCR ".lhs"
+    DeleteRegKey HKCR "ghc_haskell"
+  ${EndIf}
+
   DeleteRegKey HKCU "Software\Haskell\GHC"
   DeleteRegKey HKLM "${PRODUCT_DIR_REG_KEY}"
   DeleteRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\HaskellPlatform-${PLATFORM_VERSION}"
