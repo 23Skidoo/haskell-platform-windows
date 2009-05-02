@@ -241,7 +241,8 @@ Section "Uninstall"
     DeleteRegKey HKCR "ghc_haskell"
   ${EndIf}
 
-  DeleteRegKey HKCU "Software\Haskell\GHC"
+  DeleteRegKey HKCU Software\Haskell\GHC
+  DeleteRegKey /IfEmpty HKCU Software\Haskell
   DeleteRegKey HKLM "${PRODUCT_DIR_REG_KEY}"
   DeleteRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\HaskellPlatform-${PLATFORM_VERSION}"
 
