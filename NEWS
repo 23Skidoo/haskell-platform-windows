@@ -16,6 +16,8 @@ What's new in 2009.2.0-rc1:
 Known issues:
 
     * The installer may work with restricted user accounts, but it has not been
-      tested and is not officially supported.
+      tested and is not officially supported. The "minimal install" option (just
+      unpack the files) will most probably work, however, since it doesn't do
+      anything fancy.
 
     * glut32.dll is not included, though it probably should be.
