@@ -107,7 +107,7 @@ Section "Base components" SecMain
   ; Make this section mandatory
   SectionIn RO
 
-  StrCpy $GHC_DIR "$INSTDIR\ghc"
+  StrCpy $GHC_DIR "$INSTDIR\ghc-${GHC_VERSION}"
   StrCpy $PLATFORMDIR "$INSTDIR\extralibs"
 
   !Include ${INST_DAT}
