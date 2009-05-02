@@ -1,0 +1,21 @@
+What's new in 2009.2.0-rc1:
+
+    * We now use a single root directory for both GHC and extralibs
+      ($PROGRAMFILES\Haskell Platform\$HP_VERSION).
+
+    * Installed files are tracked precisely (no unsafe `rm -rf` business).
+
+    * A new installation mode which doesn't touch the system settings or
+      registry was introduced. Suggested by Claus Reinke.
+
+    * Installer size was cut down by 50% by turning on 7z compression (thanks to
+      Bulat Ziganshin for the heads-up).
+
+    * The welcome screen is now slightly less dull.
+
+Known issues:
+
+    * The installer may work with restricted user accounts, but it has not been
+      tested and is not officially supported.
+
+    * glut32.dll is not included, though it probably should be.
