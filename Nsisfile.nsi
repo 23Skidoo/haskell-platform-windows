@@ -118,11 +118,6 @@ Section "Base components" SecMain
   Delete "$GHC_DIR\package.conf"
   Rename "$GHC_DIR\package.conf.new" "$GHC_DIR\package.conf"
 
-  ; Write information about GHC's location to registry
-  ; (copied from the GHC installer).
-  WriteRegStr HKCU "Software\Haskell\GHC\ghc-${GHC_VERSION}" "InstallDir" "$GHC_DIR"
-  WriteRegStr HKCU "Software\Haskell\GHC" "InstallDir" "$GHC_DIR"
-
 SectionEnd
 
 SectionGroup "Update system settings" SecGr
@@ -151,6 +146,16 @@ Section "Update the PATH environment variable" SecPath
   ${EnvVarUpdate} $0 "PATH" "A" "HKLM" "$GHC_DIR\bin"
   ${EnvVarUpdate} $0 "PATH" "A" "HKLM" "$PLATFORMDIR\bin"
   ${EnvVarUpdate} $0 "PATH" "A" "HKLM" "$PROGRAMFILES\Haskell\bin"
+
+SectionEnd
+
+Section "Store GHC's location in registry"
+
+  SectionIn 1
+
+  ; (copied from the GHC installer).
+  WriteRegStr HKCU "Software\Haskell\GHC\ghc-${GHC_VERSION}" "InstallDir" "$GHC_DIR"
+  WriteRegStr HKCU "Software\Haskell\GHC" "InstallDir" "$GHC_DIR"
 
 SectionEnd
 
@@ -241,9 +246,10 @@ Section "Uninstall"
     DeleteRegKey HKCR "ghc_haskell"
   ${EndIf}
 
-  DeleteRegKey HKCU Software\Haskell\GHC
-  DeleteRegKey /IfEmpty HKCU Software\Haskell
+  DeleteRegKey HKCU "Software\Haskell\GHC\ghc-${GHC_VERSION}"
+  DeleteRegKey HKCU "Software\Haskell\GHC"
   DeleteRegKey HKLM "${PRODUCT_DIR_REG_KEY}"
+  DeleteRegKey /IfEmpty HKCU Software\Haskell
   DeleteRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\HaskellPlatform-${PLATFORM_VERSION}"
 
   ; Update PATH
