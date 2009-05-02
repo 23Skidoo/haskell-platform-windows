@@ -214,7 +214,7 @@ SectionEnd
 
 Section "Uninstall"
 
-  StrCpy $GHC_DIR "$INSTDIR\ghc"
+  StrCpy $GHC_DIR "$INSTDIR\ghc-${GHC_VERSION}"
   StrCpy $PLATFORMDIR "$INSTDIR\extralibs"
 
   !Include ${UNINST_DAT}
