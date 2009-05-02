@@ -222,8 +222,8 @@ Section "Uninstall"
   Delete "$INSTDIR\Uninstall.exe"
   RMDir $INSTDIR
 
-  ;Since we install to $PROGRAMFILES\Haksell Platform\$PLATFORM_VERSION,
-  ;we should try to delete $PROGRAMFILES\Haksell Platform
+  ;Since we install to '$PROGRAMFILES\Haksell Platform\$PLATFORM_VERSION', we
+  ;should also try to delete '$PROGRAMFILES\Haksell Platform' if it is empty.
   ${GetParent} $INSTDIR $R0
   RMDir $R0
 
