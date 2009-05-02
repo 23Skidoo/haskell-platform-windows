@@ -235,7 +235,7 @@ Section "Uninstall"
   ; Delete registry keys
   ReadRegDWORD $0 HKLM "${PRODUCT_DIR_REG_KEY}" Assocs
 
-  ${If} $0 == 0x1
+  ${If} $0 = 0x1
     DeleteRegKey HKCR ".hs"
     DeleteRegKey HKCR ".lhs"
     DeleteRegKey HKCR "ghc_haskell"
