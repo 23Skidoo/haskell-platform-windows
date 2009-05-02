@@ -59,7 +59,7 @@ FunctionEnd
   SetCompressor /SOLID lzma
 
   ;Install types
-  InstType "Normal"
+  InstType "Standard"
   InstType "Just unpack the files"
 
 ;--------------------------------
