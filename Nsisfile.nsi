@@ -3,15 +3,20 @@
 ;--------------------------------
 ;Includes
 
-  !include "MUI2.nsh"
-  !include "EnvVarUpdate.nsh"
-  !include "WordFunc.nsh"
+  !Include "MUI2.nsh"
+  !Include "EnvVarUpdate.nsh"
+  !Include "FileFunc.nsh"
+  !Include "WordFunc.nsh"
 
 ;--------------------------------
 ;Defines
 
   !Define GHC_VERSION "6.10.2"
   !Define PLATFORM_VERSION "2009.2.0"
+  !Define PRODUCT_DIR_REG_KEY "Software\Haskell\Haskell Platform\${PLATFORM_VERSION}"
+  !Define FILES_SOURCE_PATH files
+  !Define INST_DAT "inst.dat"
+  !Define UNINST_DAT "uninst.dat"
 
 ;--------------------------------
 ;Variables
@@ -40,6 +45,7 @@ FunctionEnd
 
   ;Default install dir
   InstallDir "$PROGRAMFILES\Haskell Platform\${PLATFORM_VERSION}"
+  InstallDirRegKey HKLM "${PRODUCT_DIR_REG_KEY}" ""
 
   ;Icon
   !Define MUI_ICON "installer.ico"
@@ -103,11 +109,7 @@ Section "Base components" SecMain
   StrCpy $GHC_DIR "$INSTDIR\ghc"
   StrCpy $PLATFORMDIR "$INSTDIR\extralibs"
 
-  SetOutPath "$GHC_DIR"
-  File /r "ghc\*"
-
-  SetOutPath "$PLATFORMDIR"
-  File /r "extralibs\*"
+  !Include ${INST_DAT}
 
   ; Modify $GHC_DIR\package.conf to point to $PLATFORMDIR
   ${WordReplace} "$PLATFORMDIR" "\" "\\\\" "+" $R1
@@ -166,7 +168,8 @@ Section "Create uninstaller" SecAddRem
   WriteUninstaller "$INSTDIR\Uninstall.exe"
 
   ; This is needed for uninstaller to work
-  WriteRegStr HKLM "Software\Haskell\HaskellPlatform-${PLATFORM_VERSION}" "PlatformInstallDir" "$INSTDIR"
+  WriteRegStr HKLM "${PRODUCT_DIR_REG_KEY}" "" "$INSTDIR\Uninstall.exe"
+  WriteRegStr HKLM "${PRODUCT_DIR_REG_KEY}" "InstallDir" "$INSTDIR"
 
 SectionEnd
 
@@ -205,13 +208,15 @@ Section "Uninstall"
   StrCpy $GHC_DIR "$INSTDIR\ghc"
   StrCpy $PLATFORMDIR "$INSTDIR\extralibs"
 
-  Delete "$INSTDIR\Uninstall.exe"
+  !Include ${UNINST_DAT}
 
-  ; TODO: Uninstall only installed files
-  ; TOLOOKAT: http://nsis.sourceforge.net/Advanced_Uninstall_Log_NSIS_Header
-  ; TODO: RmDir $INSTDIR\..
-  ReadRegStr $0 HKLM "Software\Haskell\HaskellPlatform-${PLATFORM_VERSION}" "PlatformInstallDir"
-  RMDir /r "$0"
+  Delete "$INSTDIR\Uninstall.exe"
+  RMDir $INSTDIR
+
+  ;Since we install to $PROGRAMFILES\Haksell Platform\$PLATFORM_VERSION,
+  ;we should try to delete $PROGRAMFILES\Haksell Platform
+  ${GetParent} $INSTDIR $R0
+  RMDir $R0
 
   ; Delete start menu shortcuts
   !insertmacro MUI_STARTMENU_GETFOLDER StartMenuPage $START_MENU_FOLDER
@@ -224,11 +229,12 @@ Section "Uninstall"
   RMDir "$SMPROGRAMS\$START_MENU_FOLDER\"
 
   ; Delete registry keys
+  ; TODO: should be optional
   DeleteRegKey HKCR ".hs"
   DeleteRegKey HKCR ".lhs"
   DeleteRegKey HKCR "ghc_haskell"
   DeleteRegKey HKCU "Software\Haskell\GHC"
-  DeleteRegKey HKLM "Software\Haskell\HaskellPlatform-${PLATFORM_VERSION}"
+  DeleteRegKey HKLM "${PRODUCT_DIR_REG_KEY}"
   DeleteRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\HaskellPlatform-${PLATFORM_VERSION}"
 
   ; Update PATH
