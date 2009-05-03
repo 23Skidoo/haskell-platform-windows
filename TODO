@@ -1,17 +1,21 @@
-* Preserve file associations.
+* Make the default HP install relocatable.
 
-* Add an "Open with GHCi" context menu.
+* Should we really use HKCR for file associations?
 
 * Ensure that several versions of the Haskell Platform can coexist.
 
-* Ensure that we play nice with Hugs's installer.
+* Ensure that we play nice with WinHugs's installer and the like. Use an "Open
+  with GHCi" context menu instead of associating .hs/.lhs with GHCi. Write a
+  clear specification that describes what we do to system settings, place it on
+  the wiki, and link to it from the download page/release notes.
 
 * Look through Claus's message/links again and write down things that I forgot;
   maybe file some tickets.
 
-* Write a script that automates things like downloading ghc/installing packages.
-
-* Utilise Sigbjorn's BAMSE work.
+* Write a script that automates things like downloading GHC/installing packages,
+  so that the installer can be built by someone who isn't me.
 
 * Branding: it would be nice to have icons with the new logo, also for .hs and
   .lhs files.
+
+* Look at Sigbjorn's BAMSE work.
