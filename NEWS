@@ -1,3 +1,30 @@
+What's new in 2009.2.1-rc1:
+
+    * The platform installer is now relocatable (all libraries are installed
+      into a single directory, and referred to via '$topdir' in package.conf).
+
+    * The default install directory no longer contains spaces (it was changed to
+      $SYSTEMDRIVE\HaskellPlatform\$PLATFORM_VERSION).
+
+Known issues:
+
+    * The network and time libraries shipped with GHC 6.10.3 were replaced with
+      versions specified in the 'haskell-platform.cabal' file (2.2.1.1 and
+      1.1.2.4 instead of 2.2.1 and 1.1.3, respectively).
+
+    * The issue of upgrading wasn't given much thought, so you're advised to
+      delete the previous Haskell Platform installation before using this
+      installer. OTOH, our behaviour is no worse than that of the existing GHC
+      installer.
+
+    * The installer may work with restricted user accounts, but it has not been
+      tested and is not officially supported. The "just unpack" option should
+      work, however, since it doesn't do anything fancy.
+
+    * glut32.dll is not included, though it probably should be.
+
+--
+
 What's new in 2009.2.0-rc1:
 
     * We now use a single root directory for both GHC and extralibs
