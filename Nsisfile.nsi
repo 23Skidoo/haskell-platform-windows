@@ -13,7 +13,7 @@
 ;Defines
 
   !Define GHC_VERSION "6.10.3"
-  !Define PLATFORM_VERSION "2009.2.1"
+  !Define PLATFORM_VERSION "2009.2.0.1"
   !Define PRODUCT_DIR_REG_KEY "Software\Haskell\Haskell Platform\${PLATFORM_VERSION}"
   !Define FILES_SOURCE_PATH "files"
   !Define INST_DAT "inst.dat"
