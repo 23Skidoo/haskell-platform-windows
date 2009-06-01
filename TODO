@@ -1,4 +1,4 @@
-* Make the default HP install relocatable.
+* Include glut32.dll, at least optionally.
 
 * Should we really use HKCR for file associations?
 
