@@ -1,3 +1,11 @@
+What's new in 2009-2.0.1-rc2:
+
+    * Version number is now 2009.2.0.1.
+
+    * The default install directory change was reverted.
+
+--
+
 What's new in 2009.2.1-rc1:
 
     * The platform installer is now relocatable (all libraries are installed
