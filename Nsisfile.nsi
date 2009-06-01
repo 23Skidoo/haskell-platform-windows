@@ -23,20 +23,16 @@
 ;Variables
 
   Var START_MENU_FOLDER
-  Var SYSTEM_DRIVE
 
 ;--------------------------------
 ;Callbacks
 
 Function .onInit
   SetShellVarContext all
-  StrCpy $SYSTEM_DRIVE $WINDIR 2
-  StrCpy $INSTDIR "$SYSTEM_DRIVE\HaskellPlatform\${PLATFORM_VERSION}"
 FunctionEnd
 
 Function un.onInit
   SetShellVarContext all
-  StrCpy $SYSTEM_DRIVE $WINDIR 2
 FunctionEnd
 
 ;--------------------------------
@@ -46,7 +42,8 @@ FunctionEnd
   Name "Haskell Platform ${PLATFORM_VERSION}"
   OutFile "HaskellPlatform-${PLATFORM_VERSION}-setup.exe"
 
-  ;Registry location to store install dir
+  ;Default install dir
+  InstallDir "$PROGRAMFILES\Haskell Platform\${PLATFORM_VERSION}"
   InstallDirRegKey HKLM "${PRODUCT_DIR_REG_KEY}" ""
 
   ;Icon
@@ -211,8 +208,8 @@ Section "Uninstall"
   Delete "$INSTDIR\Uninstall.exe"
   RMDir $INSTDIR
 
-  ;Since we install to '$SYSTEM_DRIVE\HaskellPlatform\$PLATFORM_VERSION', we
-  ;should also try to delete '$SYSTEM_DRIVE\HaskellPlatform' if it is empty.
+  ;Since we install to '$PF\Haskell Platform\$PLATFORM_VERSION', we
+  ;should also try to delete '$PF\Haskell Platform' if it is empty.
   ${GetParent} $INSTDIR $R0
   RMDir $R0
 
