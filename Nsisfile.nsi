@@ -8,6 +8,7 @@
   !Include "LogicLib.nsh"
   !Include "MUI2.nsh"
   !Include "WordFunc.nsh"
+  !Include "CreateInternetShortcut.nsh"
 
 ;--------------------------------
 ;Defines
@@ -184,15 +185,19 @@ Section "-StartMenu" StartMenu
     CreateDirectory "$SMPROGRAMS\$START_MENU_FOLDER"
     CreateDirectory "$SMPROGRAMS\$START_MENU_FOLDER\${GHC_VERSION}"
     CreateShortCut \
-    "$SMPROGRAMS\$START_MENU_FOLDER\${GHC_VERSION}\GHC Documentation.lnk" \
+    "$SMPROGRAMS\$START_MENU_FOLDER\GHC Documentation.lnk" \
      "$INSTDIR\doc\index.html"
     CreateShortCut \
-    "$SMPROGRAMS\$START_MENU_FOLDER\${GHC_VERSION}\GHC Flag Reference.lnk" \
+    "$SMPROGRAMS\$START_MENU_FOLDER\GHC Flag Reference.lnk" \
     "$INSTDIR\doc\users_guide\flag-reference.html"
     CreateShortCut \
-    "$SMPROGRAMS\$START_MENU_FOLDER\${GHC_VERSION}\GHC Library Documentation.lnk" \
+    "$SMPROGRAMS\$START_MENU_FOLDER\GHC Library Documentation.lnk" \
     "$INSTDIR\doc\libraries\index.html"
-    CreateShortCut "$SMPROGRAMS\$START_MENU_FOLDER\${GHC_VERSION}\GHCi.lnk" "$INSTDIR\bin\ghci.exe"
+    CreateShortCut "$SMPROGRAMS\$START_MENU_FOLDER\GHCi.lnk" "$INSTDIR\bin\ghci.exe"
+    !insertmacro CreateInternetShortcut \
+    "$SMPROGRAMS\$START_MENU_FOLDER\HackageDB - Haskell Software Repository" \
+    "http://hackage.haskell.org" \
+    "$INSTDIR\icons\hackage.ico" "0"
 
   !insertmacro MUI_STARTMENU_WRITE_END
 
