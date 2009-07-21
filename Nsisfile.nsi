@@ -16,6 +16,7 @@
   !Define GHC_VERSION "6.10.4"
   !Define PLATFORM_VERSION "2009.2.0.2"
   !Define PRODUCT_DIR_REG_KEY "Software\Haskell\Haskell Platform\${PLATFORM_VERSION}"
+  !Define HACKAGE_SHORTCUT_TEXT "HackageDB - Haskell Software Repository"
   !Define FILES_SOURCE_PATH "files"
   !Define INST_DAT "inst.dat"
   !Define UNINST_DAT "uninst.dat"
@@ -77,10 +78,12 @@ FunctionEnd
   !insertmacro MUI_PAGE_COMPONENTS
 
   ;Start Menu Folder Page Configuration
-  !Define MUI_PAGE_HEADER_SUBTEXT "Choose a Start Menu folder for the GHC ${GHC_VERSION} shortcuts."
-  !Define MUI_STARTMENUPAGE_TEXT_TOP "Select the Start Menu folder in which you would like to create Glasgow Haskell Compiler's shortcuts. You can also enter a name to create a new folder."
+  !Define MUI_PAGE_HEADER_SUBTEXT \
+  "Choose a Start Menu folder for the Haskell Platform ${PLATFORM_VERSION} shortcuts."
+  !Define MUI_STARTMENUPAGE_TEXT_TOP \
+  "Select the Start Menu folder in which you would like to create Haskell Platform shortcuts. You can also enter a name to create a new folder."
   !Define MUI_STARTMENUPAGE_REGISTRY_ROOT "HKLM"
-  !Define MUI_STARTMENUPAGE_REGISTRY_KEY "Software\Haskell\GHC\ghc-${GHC_VERSION}"
+  !Define MUI_STARTMENUPAGE_REGISTRY_KEY "${PRODUCT_DIR_REG_KEY}"
   !Define MUI_STARTMENUPAGE_REGISTRY_VALUENAME "Start Menu Folder"
   !Define MUI_STARTMENUPAGE_DEFAULTFOLDER "Haskell Platform ${PLATFORM_VERSION}"
   !insertmacro MUI_PAGE_STARTMENU StartMenuPage $START_MENU_FOLDER
@@ -184,6 +187,10 @@ Section "-StartMenu" StartMenu
     ;Create shortcuts
     CreateDirectory "$SMPROGRAMS\$START_MENU_FOLDER"
     CreateDirectory "$SMPROGRAMS\$START_MENU_FOLDER\${GHC_VERSION}"
+    !insertmacro CreateInternetShortcut \
+    "$SMPROGRAMS\$START_MENU_FOLDER\${HACKAGE_SHORTCUT_TEXT}" \
+    "http://hackage.haskell.org" \
+    "$INSTDIR\icons\hackage.ico" "0"
     CreateShortCut \
     "$SMPROGRAMS\$START_MENU_FOLDER\GHC Documentation.lnk" \
      "$INSTDIR\doc\index.html"
@@ -194,10 +201,6 @@ Section "-StartMenu" StartMenu
     "$SMPROGRAMS\$START_MENU_FOLDER\GHC Library Documentation.lnk" \
     "$INSTDIR\doc\libraries\index.html"
     CreateShortCut "$SMPROGRAMS\$START_MENU_FOLDER\GHCi.lnk" "$INSTDIR\bin\ghci.exe"
-    !insertmacro CreateInternetShortcut \
-    "$SMPROGRAMS\$START_MENU_FOLDER\HackageDB - Haskell Software Repository" \
-    "http://hackage.haskell.org" \
-    "$INSTDIR\icons\hackage.ico" "0"
 
   !insertmacro MUI_STARTMENU_WRITE_END
 
@@ -221,11 +224,11 @@ Section "Uninstall"
   ; Delete start menu shortcuts
   !insertmacro MUI_STARTMENU_GETFOLDER StartMenuPage $START_MENU_FOLDER
 
-  Delete "$SMPROGRAMS\$START_MENU_FOLDER\${GHC_VERSION}\GHC Documentation.lnk"
-  Delete "$SMPROGRAMS\$START_MENU_FOLDER\${GHC_VERSION}\GHC Flag Reference.lnk"
-  Delete "$SMPROGRAMS\$START_MENU_FOLDER\${GHC_VERSION}\GHC Library Documentation.lnk"
-  Delete "$SMPROGRAMS\$START_MENU_FOLDER\${GHC_VERSION}\GHCi.lnk"
-  RMDir "$SMPROGRAMS\$START_MENU_FOLDER\${GHC_VERSION}"
+  Delete "$SMPROGRAMS\$START_MENU_FOLDER\GHC Documentation.lnk"
+  Delete "$SMPROGRAMS\$START_MENU_FOLDER\GHC Flag Reference.lnk"
+  Delete "$SMPROGRAMS\$START_MENU_FOLDER\GHC Library Documentation.lnk"
+  Delete "$SMPROGRAMS\$START_MENU_FOLDER\GHCi.lnk"
+  Delete "$SMPROGRAMS\$START_MENU_FOLDER\${HACKAGE_SHORTCUT_TEXT}.url"
   RMDir "$SMPROGRAMS\$START_MENU_FOLDER\"
 
   ; Delete registry keys
