@@ -186,7 +186,6 @@ Section "-StartMenu" StartMenu
 
     ;Create shortcuts
     CreateDirectory "$SMPROGRAMS\$START_MENU_FOLDER"
-    CreateDirectory "$SMPROGRAMS\$START_MENU_FOLDER\${GHC_VERSION}"
     !insertmacro CreateInternetShortcut \
     "$SMPROGRAMS\$START_MENU_FOLDER\${HACKAGE_SHORTCUT_TEXT}" \
     "http://hackage.haskell.org" \
