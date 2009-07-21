@@ -1,3 +1,11 @@
+What's new in 2009-2.0.2-rc1:
+
+    * The Start Menu directory is now 'Haskell Platform' instead of 'GHC' (#29).
+
+    * Added a link to Hackage to the HP Start Menu entry (#70).
+
+--
+
 What's new in 2009-2.0.1-rc2:
 
     * Version number is now 2009.2.0.1.
