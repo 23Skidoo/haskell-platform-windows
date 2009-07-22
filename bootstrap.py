@@ -4,10 +4,13 @@
 # Python cause I can't depend on necessary Haskell libs being installed.
 
 # TODO
+# * Purge unnecessary libs
 # * Move the lib dir to $GHC_DIR/extralibs
 # * Modify $GHC_DIR/package.conf
 # * Copy $GHC_DIR to $PWD/files
 # * Add icons
+
+purgelibs = ["time", "network"]
 
 extrallibs = [("network", "2.2.1.4"),
               ("HTTP", "4000.0.6"),
