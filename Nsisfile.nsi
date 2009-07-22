@@ -49,8 +49,8 @@ FunctionEnd
   InstallDirRegKey HKLM "${PRODUCT_DIR_REG_KEY}" ""
 
   ;Icon
-  !Define MUI_ICON "installer.ico"
-  !Define MUI_UNICON "installer.ico"
+  !Define MUI_ICON "icons/installer.ico"
+  !Define MUI_UNICON "icons/installer.ico"
 
   ;Request application privileges for Windows Vista
   RequestExecutionLevel admin
