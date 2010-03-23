@@ -136,9 +136,9 @@ Section "Update the PATH environment variable" SecPath
   SectionIn 1
 
   ; Update PATH
-  ${EnvVarUpdate} $0 "PATH" "A" "HKLM" "$INSTDIR\bin"
-  ${EnvVarUpdate} $0 "PATH" "A" "HKLM" "$INSTDIR\extralibs\bin"
-  ${EnvVarUpdate} $0 "PATH" "A" "HKLM" "$PROGRAMFILES\Haskell\bin"
+  ${EnvVarUpdate} $0 "PATH" "P" "HKLM" "$INSTDIR\bin"
+  ${EnvVarUpdate} $0 "PATH" "P" "HKLM" "$INSTDIR\extralibs\bin"
+  ${EnvVarUpdate} $0 "PATH" "P" "HKLM" "$PROGRAMFILES\Haskell\bin"
 
 SectionEnd
 
