@@ -1,5 +1,9 @@
 * Add Express & Custom install types
 
+* Add "Install only for the current user"
+
+* WinGHCi should work even if GHC's location is not in the registry
+
 * Add a way of choosing between WinGHCi and GHCi for .hs associations
 
 * Include glut32.dll, at least optionally.
