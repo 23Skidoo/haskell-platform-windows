@@ -137,7 +137,7 @@ Section "Update the PATH environment variable" SecPath
 
   ; Update PATH
   ${EnvVarUpdate} $0 "PATH" "P" "HKLM" "$INSTDIR\bin"
-  ${EnvVarUpdate} $0 "PATH" "P" "HKLM" "$INSTDIR\extralibs\bin"
+  ${EnvVarUpdate} $0 "PATH" "P" "HKLM" "$INSTDIR\lib\extralibs\bin"
   ${EnvVarUpdate} $0 "PATH" "P" "HKLM" "$PROGRAMFILES\Haskell\bin"
 
 SectionEnd
@@ -192,13 +192,13 @@ Section "-StartMenu" StartMenu
     "$INSTDIR\icons\hackage.ico" "0"
     CreateShortCut \
     "$SMPROGRAMS\$START_MENU_FOLDER\GHC Documentation.lnk" \
-     "$INSTDIR\doc\index.html"
+     "$INSTDIR\doc\html\index.html"
     CreateShortCut \
     "$SMPROGRAMS\$START_MENU_FOLDER\GHC Flag Reference.lnk" \
-    "$INSTDIR\doc\users_guide\flag-reference.html"
+    "$INSTDIR\doc\html\users_guide\flag-reference.html"
     CreateShortCut \
     "$SMPROGRAMS\$START_MENU_FOLDER\GHC Library Documentation.lnk" \
-    "$INSTDIR\doc\libraries\index.html"
+    "$INSTDIR\doc\html\libraries\index.html"
     CreateShortCut "$SMPROGRAMS\$START_MENU_FOLDER\GHCi.lnk" \
     "$INSTDIR\bin\ghci.exe"
     CreateShortCut "$SMPROGRAMS\$START_MENU_FOLDER\WinGHCi.lnk" \
@@ -230,6 +230,7 @@ Section "Uninstall"
   Delete "$SMPROGRAMS\$START_MENU_FOLDER\GHC Flag Reference.lnk"
   Delete "$SMPROGRAMS\$START_MENU_FOLDER\GHC Library Documentation.lnk"
   Delete "$SMPROGRAMS\$START_MENU_FOLDER\GHCi.lnk"
+  Delete "$SMPROGRAMS\$START_MENU_FOLDER\WinGHCi.lnk"
   Delete "$SMPROGRAMS\$START_MENU_FOLDER\${HACKAGE_SHORTCUT_TEXT}.url"
   RMDir "$SMPROGRAMS\$START_MENU_FOLDER\"
 
@@ -250,6 +251,6 @@ Section "Uninstall"
 
   ; Update PATH
   ${un.EnvVarUpdate} $0 "PATH" "R" "HKLM" "$INSTDIR\bin"
-  ${un.EnvVarUpdate} $0 "PATH" "R" "HKLM" "$INSTDIR\extralibs\bin"
+  ${un.EnvVarUpdate} $0 "PATH" "R" "HKLM" "$INSTDIR\lib\extralibs\bin"
 
 SectionEnd
