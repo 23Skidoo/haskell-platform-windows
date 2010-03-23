@@ -199,7 +199,10 @@ Section "-StartMenu" StartMenu
     CreateShortCut \
     "$SMPROGRAMS\$START_MENU_FOLDER\GHC Library Documentation.lnk" \
     "$INSTDIR\doc\libraries\index.html"
-    CreateShortCut "$SMPROGRAMS\$START_MENU_FOLDER\GHCi.lnk" "$INSTDIR\bin\ghci.exe"
+    CreateShortCut "$SMPROGRAMS\$START_MENU_FOLDER\GHCi.lnk" \
+    "$INSTDIR\bin\ghci.exe"
+    CreateShortCut "$SMPROGRAMS\$START_MENU_FOLDER\WinGHCi.lnk" \
+    "$INSTDIR\winghci\winghci.exe"
 
   !insertmacro MUI_STARTMENU_WRITE_END
 
