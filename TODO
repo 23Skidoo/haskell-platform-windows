@@ -1,3 +1,7 @@
+* Add Express & Custom install types
+
+* Add a way of choosing between WinGHCi and GHCi for .hs associations
+
 * Include glut32.dll, at least optionally.
 
 * Should we really use HKCR for file associations?
