@@ -1,4 +1,26 @@
-What's new in 2009-2.0.2-rc1:
+What's new in 2010.1.0.0-rc2:
+
+    * $INSTDIR/mingw/bin is now added to PATH (#114)
+
+    * cabal-install version updated to 0.8.1
+
+    * regex-posix now works (thanks to Simon Marlow!)
+
+    * WinGHCi version updated to 1.0.5
+
+    * Profiling versions of all libraries are now included (#87)
+
+--
+
+What's new in 2010.1.0.0-rc1:
+
+    * We now prepend to PATH instead of appending (#82)
+
+    * WinGHCi is bundled with the installer (#80)
+
+--
+
+What's new in 2009.2.0.2-rc1:
 
     * The Start Menu directory is now 'Haskell Platform' instead of 'GHC' (#29).
 
@@ -6,7 +28,7 @@ What's new in 2009-2.0.2-rc1:
 
 --
 
-What's new in 2009-2.0.1-rc2:
+What's new in 2009.2.0.1-rc2:
 
     * Version number is now 2009.2.0.1.
 
