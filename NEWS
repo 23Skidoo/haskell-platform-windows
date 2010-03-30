@@ -1,3 +1,12 @@
+What's new in 2010.1.0.0-rc3:
+
+   * Fixed a PATH issue that prevented alex and happy from working (reported by
+     Krasimir Angelov)
+
+   * $APPDATA/cabal/bin is now added to PATH (reported by Han Joosten)
+
+--
+
 What's new in 2010.1.0.0-rc2:
 
     * $INSTDIR/mingw/bin is now added to PATH (#114)
