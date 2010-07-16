@@ -13,8 +13,8 @@
 ;--------------------------------
 ;Defines
 
-  !Define GHC_VERSION "6.12.1"
-  !Define PLATFORM_VERSION "2010.1.0.0"
+  !Define GHC_VERSION "6.12.3"
+  !Define PLATFORM_VERSION "2010.2.0.0"
   !Define PRODUCT_DIR_REG_KEY "Software\Haskell\Haskell Platform\${PLATFORM_VERSION}"
   !Define HACKAGE_SHORTCUT_TEXT "HackageDB - Haskell Software Repository"
   !Define FILES_SOURCE_PATH "files"
@@ -137,7 +137,6 @@ Section "Update the PATH environment variable" SecPath
 
   ; Update PATH
   ${EnvVarUpdate} $0 "PATH" "P" "HKLM" "$INSTDIR\bin"
-  ${EnvVarUpdate} $0 "PATH" "P" "HKLM" "$INSTDIR\lib\extralibs\bin"
   ${EnvVarUpdate} $0 "PATH" "P" "HKLM" "$PROGRAMFILES\Haskell\bin"
   SetShellVarContext current
   ${EnvVarUpdate} $0 "PATH" "P" "HKCU" "$APPDATA\cabal\bin"
@@ -255,7 +254,6 @@ Section "Uninstall"
 
   ; Update PATH
   ${un.EnvVarUpdate} $0 "PATH" "R" "HKLM" "$INSTDIR\bin"
-  ${un.EnvVarUpdate} $0 "PATH" "R" "HKLM" "$INSTDIR\lib\extralibs\bin"
   ${un.EnvVarUpdate} $0 "PATH" "R" "HKLM" "$PROGRAMFILES\Haskell\bin"
   SetShellVarContext current
   ${un.EnvVarUpdate} $0 "PATH" "R" "HKCU" "$APPDATA\cabal\bin"
