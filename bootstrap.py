@@ -4,26 +4,22 @@
 # Python cause I can't depend on necessary Haskell libs being installed.
 
 # TODO
-# * Purge unnecessary libs
 # * Move the lib dir to $GHC_DIR/extralibs
 # * Modify $GHC_DIR/package.conf
 # * Copy $GHC_DIR to $PWD/files
 # * Add icons
 
-purgelibs = ["time", "network"]
 
-extrallibs = [("network", "2.2.1.4"),
-              ("HTTP", "4000.0.6"),
-              ("zlib", "0.5.0.0"),
-              ("time", "1.1.2.4"),
-              ("cgi", "3001.1.7.1"),
-              ("fgl", "5.4.2.2"),
-              ("GLUT", "2.1.1.2"),
-              ("OpenGL", "2.2.1.1")]
+bootstraplibs = [("mtl", "1.1.0.2"),
+                 ("parsec", "2.1.0.1"),
+                 ("network", "2.2.1.7"),
+                 ("HTTP", "4000.0.9"),
+                 ("zlib", "0.5.2.0")]
 
-extratools = [("alex", "2.3.1"),
-              ("happy", "1.18.4"),
-              ("cabal-install", "0.6.2")]
+extratools = [("alex", "2.3.3"),
+              ("happy", "1.18.5"),
+              ("haddock", "2.7.2"),
+              ("cabal-install", "0.8.2")]
 
 def install(lib):
     name, version = lib
