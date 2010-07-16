@@ -1,3 +1,14 @@
+What's new in 2010.2.0.0-rc1:
+
+   * Fixed path issue that prevented some libraries to compile (e.g. digest)
+     (#124).
+
+   * haddock now works (#119).
+
+   * g++ is again included (#123).
+
+--
+
 What's new in 2010.1.0.0-rc3:
 
    * Fixed a PATH issue that prevented alex and happy from working (reported by
