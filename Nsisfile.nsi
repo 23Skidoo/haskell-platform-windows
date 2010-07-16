@@ -137,6 +137,7 @@ Section "Update the PATH environment variable" SecPath
 
   ; Update PATH
   ${EnvVarUpdate} $0 "PATH" "P" "HKLM" "$INSTDIR\bin"
+  ${EnvVarUpdate} $0 "PATH" "P" "HKLM" "$INSTDIR\lib\extralibs\bin"
   ${EnvVarUpdate} $0 "PATH" "P" "HKLM" "$PROGRAMFILES\Haskell\bin"
   SetShellVarContext current
   ${EnvVarUpdate} $0 "PATH" "P" "HKCU" "$APPDATA\cabal\bin"
@@ -254,6 +255,7 @@ Section "Uninstall"
 
   ; Update PATH
   ${un.EnvVarUpdate} $0 "PATH" "R" "HKLM" "$INSTDIR\bin"
+  ${un.EnvVarUpdate} $0 "PATH" "R" "HKLM" "$INSTDIR\lib\extralibs\bin"
   ${un.EnvVarUpdate} $0 "PATH" "R" "HKLM" "$PROGRAMFILES\Haskell\bin"
   SetShellVarContext current
   ${un.EnvVarUpdate} $0 "PATH" "R" "HKCU" "$APPDATA\cabal\bin"
