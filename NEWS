@@ -1,11 +1,15 @@
 What's new in 2010.2.0.0-rc1:
 
-   * Fixed path issue that prevented some libraries to compile (e.g. digest)
-     (#124).
+   * Fixed the path issue that prevented some libraries from compiling (relevant
+     e.g. for the digest library) (#124).
 
-   * haddock now works (#119).
+   * Haddock now works (#119).
 
-   * g++ is again included (#123).
+   * g++ is back! (#123).
+
+Known issues:
+
+   See http://trac.haskell.org/haskell-platform/wiki/Windows
 
 --
 
