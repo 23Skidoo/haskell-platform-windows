@@ -1,1 +1,40 @@
 Windows installer for the Haskell Platform.
+
+How to make a release
+---------------------
+
+0. Install GHC, msys, nsis and darcs (http://wiki.darcs.net/Binaries).
+   Make sure that you have the special build of nsis with large strings support.
+   Add $GHCDIR/mingw/bin to PATH.
+
+1. Manually install cabal-install's dependencies: zlib, transformers,
+   mtl, parsec, network, HTTP (in this order).
+
+   (That is: download/unpack the .tar.gz, runghc Setup.hs
+   configure -p/build/install).
+
+2. Manually install cabal-install
+
+3. cabal install alex,happy
+
+4. darcs get --lazy http://code.galois.com/darcs/haskell-platform/
+
+5. cd haskell-platform && cabal install
+   Make sure that you have library-profiling set to True in $APPDATA/cabal/config.
+
+6. Move all stuff from $PROGRAMFILES/Haskell/{bin,lib} to
+$GHCDIR/{bin,lib/extralibs}.
+
+7. Run recache.py
+
+8. Copy $GHCDIR to $THISDIR/files
+
+9. Run gen_files_for_nsis.py
+
+10. Edit Nsisfile.nsi
+
+11. Build the installer (right-click Nsisfile.nsi -> Compile NSIS Script).
+
+TODO
+----
+I should really automate all this stuff...
