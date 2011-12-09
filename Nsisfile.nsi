@@ -60,7 +60,7 @@ FunctionEnd
 
   ;Install types
   InstType "Standard"
-  InstType "Just unpack the files"
+  InstType "Portable (just unpack the files)"
 
 ;--------------------------------
 ;Interface Settings
