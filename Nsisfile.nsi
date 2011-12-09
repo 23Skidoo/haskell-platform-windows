@@ -53,7 +53,7 @@ FunctionEnd
   !Define MUI_UNICON "icons/installer.ico"
 
   ;Request application privileges for Windows Vista
-  RequestExecutionLevel admin
+  RequestExecutionLevel highest
 
   ;Best available compression
   SetCompressor /SOLID lzma
