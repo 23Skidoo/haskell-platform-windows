@@ -1,3 +1,8 @@
+* Write a script that automates things like downloading GHC/installing packages,
+  so that the installer can be built by someone who isn't me.
+
+* Apply Claus's changes from the GHC installer
+
 * Add Express & Custom install types
 
 * Add "Install only for the current user"
@@ -20,10 +25,6 @@
 * Look through Claus's message/links again and write down things that I forgot;
   maybe file some tickets.
 
-* Write a script that automates things like downloading GHC/installing packages,
-  so that the installer can be built by someone who isn't me.
-
-* Branding: it would be nice to have icons with the new logo, also for .hs and
-  .lhs files.
+* Branding: it would be nice to have different icons for .hs and .lhs files.
 
 * Look at Sigbjorn's BAMSE work.
