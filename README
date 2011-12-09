@@ -1,7 +1,7 @@
 Windows installer for the Haskell Platform.
 
-How to make a release
----------------------
+How to make an installer
+------------------------
 
 0. Install GHC, msys, nsis and darcs (http://wiki.darcs.net/Binaries).
    Make sure that you have the special build of nsis with large strings support.
@@ -11,30 +11,42 @@ How to make a release
    mtl, parsec, network, HTTP (in this order).
 
    (That is: download/unpack the .tar.gz, runghc Setup.hs
-   configure -p/build/install).
+   configure -p/build/install; or use ghc-install.sh).
 
 2. Manually install cabal-install
 
-3. cabal install alex,happy
+3. cabal update
+   cabal install alex-$ALEX_VERSION happy-$HAPPY_VERSION
 
 4. darcs get --lazy http://code.galois.com/darcs/haskell-platform/
 
 5. cd haskell-platform && cabal install
-   Make sure that you have library-profiling set to True in $APPDATA/cabal/config.
+
+   Make sure that you have library-profiling set to True and user-install set to
+   False in $APPDATA/cabal/config.
+
+   Make sure that you have glut.h and libglut32.a in $GHCDIR/{include/GL,lib}.
 
 6. Move all stuff from $PROGRAMFILES/Haskell/{bin,lib} to
-$GHCDIR/{bin,lib/extralibs}.
+$GHCDIR/{lib/extralibs/bin,lib/extralibs}.
 
 7. Run recache.py
 
 8. Copy $GHCDIR to $THISDIR/files
 
-9. Run gen_files_for_nsis.py
+9. Build winghci & put it into $THISDIR/files/winghci
 
-10. Edit Nsisfile.nsi
+   Don't forget the runtime library (depends on the Visual Studio version:
+   usually msvcr900.dll, can be checked with dependency walker)
 
-11. Build the installer (right-click Nsisfile.nsi -> Compile NSIS Script).
+10. Update GHC_VERSION and PLATFORM_VERSION in Nsisfile.nsi
 
-TODO
-----
-I should really automate all this stuff...
+11. Copy $THISDIR/icons/*.ico to $THISDIR/files/icons
+
+12. gen_files_for_nsis.py files inst.dat uninst.dat
+
+13. Build the installer (right-click Nsisfile.nsi -> Compile NSIS Script).
+
+14. Testing the installer
+
+    I usually check that regex-posix and glut work.
