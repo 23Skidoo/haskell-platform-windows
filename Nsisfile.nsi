@@ -160,6 +160,7 @@ SectionEnd
 Section "Create uninstaller" SecAddRem
 
   SectionIn 1
+  SectionIn RO
 
   ; Add uninstall information to Add/Remove Programs
   WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\HaskellPlatform-${PLATFORM_VERSION}" \
