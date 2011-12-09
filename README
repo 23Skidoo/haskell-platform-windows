@@ -8,7 +8,8 @@ How to make an installer
    Add $GHCDIR/mingw/bin to PATH.
 
 1. Manually install cabal-install's dependencies: zlib, transformers,
-   mtl, parsec, network, HTTP (in this order).
+   mtl, parsec, network, HTTP (in this order). Make sure to use appropriate
+   versions (see haskell-platform.cabal).
 
    (That is: download/unpack the .tar.gz, runghc Setup.hs
    configure -p/build/install; or use ghc-install.sh).
@@ -18,7 +19,7 @@ How to make an installer
 3. cabal update
    cabal install alex-$ALEX_VERSION happy-$HAPPY_VERSION
 
-4. darcs get --lazy http://code.galois.com/darcs/haskell-platform/
+4. darcs get --lazy http://code.haskell.org/haskell-platform/
 
 5. cd haskell-platform && cabal install
 
