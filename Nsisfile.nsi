@@ -265,6 +265,9 @@ Section "Uninstall"
     DeleteRegValue HKCR ".lhs" ""
     DeleteRegValue HKCR "ghc_haskell\shell\open\command" ""
     DeleteRegKey HKCR "ghc_haskell\DefaultIcon"
+    DeleteRegKey /IfEmpty HKCR "ghc_haskell\shell\open\command"
+    DeleteRegKey /IfEmpty HKCR "ghc_haskell\shell\open"
+    DeleteRegKey /IfEmpty HKCR "ghc_haskell\shell"
     DeleteRegKey /IfEmpty HKCR "ghc_haskell"
   ${EndIf}
 
