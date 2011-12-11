@@ -116,7 +116,7 @@ SectionEnd
 
 SectionGroup "Update system settings" SecGr
 
-Section "Associate .hs/.lhs files with GHCi" SecAssoc
+Section "Associate with .hs/.lhs files" SecAssoc
 
   SectionIn 1
 
@@ -132,6 +132,17 @@ Section "Associate .hs/.lhs files with GHCi" SecAssoc
 
 SectionEnd
 
+Section "Add versioned GHCi to right-click menu" SecGHCiVersioned
+
+  SectionIn 1
+
+  WriteRegStr HKCR "ghc_haskell\shell\Open with GHCi ${GHC_VERSION}" "" ""
+  WriteRegStr HKCR "ghc_haskell\shell\Open with GHCi ${GHC_VERSION}\command" "" '"$INSTDIR\bin\ghci.exe" "%1"'
+
+  ;Remember that we added versioned GHCi
+  WriteRegDWORD HKLM "${PRODUCT_DIR_REG_KEY}" VersionedGHCi 0x1
+SectionEnd
+
 Section "Update the PATH environment variable" SecPath
 
   SectionIn 1
@@ -143,7 +154,6 @@ Section "Update the PATH environment variable" SecPath
   SetShellVarContext current
   ${EnvVarUpdate} $0 "PATH" "P" "HKCU" "$APPDATA\cabal\bin"
   SetShellVarContext all
-
 
 SectionEnd
 
@@ -241,12 +251,21 @@ Section "Uninstall"
   RMDir "$SMPROGRAMS\$START_MENU_FOLDER\"
 
   ; Delete registry keys
+  ReadRegDWORD $0 HKLM "${PRODUCT_DIR_REG_KEY}" VersionedGHCi
+
+  ${If} $0 = 0x1
+    DeleteRegKey HKCR "ghc_haskell\shell\Open with GHCi ${GHC_VERSION}\command"
+    DeleteRegKey HKCR "ghc_haskell\shell\Open with GHCi ${GHC_VERSION}"
+  ${EndIf}
+
   ReadRegDWORD $0 HKLM "${PRODUCT_DIR_REG_KEY}" Assocs
 
   ${If} $0 = 0x1
-    DeleteRegKey HKCR ".hs"
-    DeleteRegKey HKCR ".lhs"
-    DeleteRegKey HKCR "ghc_haskell"
+    DeleteRegValue HKCR ".hs" ""
+    DeleteRegValue HKCR ".lhs" ""
+    DeleteRegValue HKCR "ghc_haskell\shell\open\command" ""
+    DeleteRegKey HKCR "ghc_haskell\DefaultIcon"
+    DeleteRegKey /IfEmpty HKCR "ghc_haskell"
   ${EndIf}
 
   DeleteRegKey HKCU "Software\Haskell\GHC\ghc-${GHC_VERSION}"
