@@ -38,12 +38,12 @@ $GHCDIR/{lib/extralibs/bin,lib/extralibs}.
 
    Don't forget to remove unins000.dat and unins000.exe from $THISDIR/files.
 
-9. Build winghci & put it into $THISDIR/files/winghci
+9. Build winghci & put it into $THISDIR/files/winghci.
 
    Don't forget the runtime library (depends on the Visual Studio version:
-   usually msvcr900.dll, can be checked with dependency walker)
+   e.g. for MSVC 9 it's msvcr900.dll, can be checked with dependency walker).
 
-10. Update GHC_VERSION and PLATFORM_VERSION in Nsisfile.nsi
+10. Update GHC_VERSION and PLATFORM_VERSION variables in Nsisfile.nsi.
 
 11. Copy $THISDIR/icons/*.ico to $THISDIR/files/icons
 
