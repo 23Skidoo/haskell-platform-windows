@@ -1,9 +1,12 @@
+* Generate haddock docs for all libraries in the platform - look at Mark's
+  message ( http://article.gmane.org/gmane.comp.lang.haskell.platform/1421 ).
+
+* Run ghc-pkg recache after installation.
+
 * Write a script that automates things like downloading GHC/installing packages,
   so that the installer can be built by someone who isn't me.
 
-* Apply Claus's changes from the GHC installer
-
-* Add Express & Custom install types
+* Add an Express install types
 
 * Add "Install only for the current user"
 
