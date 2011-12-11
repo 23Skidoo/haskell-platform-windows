@@ -26,14 +26,17 @@ How to make an installer
    Make sure that you have library-profiling set to True and user-install set to
    False in $APPDATA/cabal/config.
 
-   Make sure that you have glut.h and libglut32.a in $GHCDIR/{include/GL,lib}.
+   Make sure that you have glut.h and libglut32.a in $GHCDIR/mingw/{include/GL,lib}.
 
 6. Move all stuff from $PROGRAMFILES/Haskell/{bin,lib} to
 $GHCDIR/{lib/extralibs/bin,lib/extralibs}.
 
-7. Run recache.py
+7. Run recache.py (editing it beforehand to fix the paths).
+   Run 'ghc-pkg check' to check that 'recache.py' caused no problems.
 
-8. Copy $GHCDIR to $THISDIR/files
+8. Copy $GHCDIR to $THISDIR/files & uninstall GHC.
+
+   Don't forget to remove unins000.dat and unins000.exe from $THISDIR/files.
 
 9. Build winghci & put it into $THISDIR/files/winghci
 
@@ -48,6 +51,6 @@ $GHCDIR/{lib/extralibs/bin,lib/extralibs}.
 
 13. Build the installer (right-click Nsisfile.nsi -> Compile NSIS Script).
 
-14. Testing the installer
+14. Test the installer.
 
     I usually check that regex-posix and glut work.
