@@ -1,5 +1,21 @@
 #! /bin/sh
 
-runghc $1 configure -p
-runghc $1 build
-runghc $1 install
+SETUP_HS=
+if [ -e Setup.lhs ]
+then
+    SETUP_HS="Setup.lhs"
+fi
+if [ -e Setup.hs ]
+then
+    SETUP_HS="Setup.hs"
+fi
+
+if [ -z $SETUP_HS ]
+then
+    echo "Couldn't find the Setup.[l]hs file!"
+    exit 1;
+fi
+
+runghc $SETUP_HS configure -p
+runghc $SETUP_HS build
+runghc $SETUP_HS install
