@@ -3,10 +3,11 @@ Windows installer for the Haskell Platform.
 How to make an installer
 ------------------------
 
-0. Install the prerequisites: ActivePerl, Python, MSYS and NSIS.
+0. Install the prerequisites: Python, MSYS and NSIS.
    Install GHC.
    Make sure that you have the special build of NSIS with large strings support.
    Add $GHCDIR/mingw/bin to PATH.
+   Add $GHCDIR/perl to PATH.
 
 1. Manually install cabal-install's dependencies: zlib, transformers,
    mtl, text, parsec, network, HTTP, random (in this order). Make sure
@@ -64,10 +65,10 @@ $GHCDIR/{lib/extralibs/bin,lib/extralibs}.
 
 12. Copy $THISDIR/icons/*.ico to $THISDIR/files/icons
 
-13. gen_files_for_nsis.py files inst.dat uninst.dat
+13. $ gen_list_files_for_nsis.py files inst.dat uninst.dat
 
 14. Build the installer (right-click Nsisfile.nsi -> Compile NSIS Script).
 
-15. Test the installer.
+15. Test the installer (see the 'test' dir).
 
     I usually check that regex-posix and glut work.
