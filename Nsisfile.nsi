@@ -13,8 +13,8 @@
 ;--------------------------------
 ;Defines
 
-  !Define GHC_VERSION "7.0.4"
-  !Define PLATFORM_VERSION "2011.4.0.0"
+  !Define GHC_VERSION "7.4.1"
+  !Define PLATFORM_VERSION "2012.2.0.0"
   !Define PRODUCT_DIR_REG_KEY "Software\Haskell\Haskell Platform\${PLATFORM_VERSION}"
   !Define HACKAGE_SHORTCUT_TEXT "HackageDB - Haskell Software Repository"
   !Define FILES_SOURCE_PATH "files"
