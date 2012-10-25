@@ -13,7 +13,7 @@ How to make an installer
    mtl, text, parsec, network, HTTP, random (in this order). Make sure
    to use appropriate versions (see haskell-platform.cabal).
 
-   To install libraries manually: 
+   To install libraries manually:
    	 $ wget http://...$PACKAGE.tar.gz
          $ tar xzf $PACKAGE.tar.gz
 	 $ cd $PACKAGE
@@ -36,9 +36,9 @@ How to make an installer
 5. Make sure that you have 'library-profiling' set to True, 'user-install' set to
    False and 'documentation' set to True in $APPDATA/cabal/config.
 
-   Make sure that you have glut.h and libglut32.a in $GHCDIR/mingw/{include/GL,lib} 
+   Make sure that you have glut.h and libglut32.a in $GHCDIR/mingw/{include/GL,lib}
    (can be copied from the previous Platform files).
-   
+
    In the haskell-platform directory:
    $ cabal install
    $ cabal install alex-$ALEX_VERSION happy-$HAPPY_VERSION
@@ -72,3 +72,5 @@ $GHCDIR/{lib/extralibs/bin,lib/extralibs}.
 15. Test the installer (see the 'test' dir).
 
     I usually check that regex-posix and glut work.
+
+16. Don't forget to publish the MD5 sig when doing the release announcement.
