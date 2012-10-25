@@ -16,7 +16,7 @@ then
     exit 1;
 fi
 
-runghc $SETUP_HS configure --enable-library-profiling --global
+runghc $SETUP_HS configure --enable-library-profiling --enable-shared --enable-split-objs --global
 runghc $SETUP_HS build
 runghc $SETUP_HS haddock
 runghc $SETUP_HS install
