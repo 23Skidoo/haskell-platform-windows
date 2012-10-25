@@ -6,7 +6,7 @@
 * Write a script that automates things like downloading GHC/installing packages,
   so that the installer can be built by someone who isn't me.
 
-* Add an Express install types
+* Add an Express install type
 
 * Add "Install only for the current user"
 
