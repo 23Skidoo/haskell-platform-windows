@@ -27,17 +27,6 @@
   Var START_MENU_FOLDER
 
 ;--------------------------------
-;Callbacks
-
-Function .onInit
-  SetShellVarContext all
-FunctionEnd
-
-Function un.onInit
-  SetShellVarContext all
-FunctionEnd
-
-;--------------------------------
 ;General settings
 
   ;Name and file
@@ -61,6 +50,25 @@ FunctionEnd
   ;Install types
   InstType "Standard"
   InstType "Portable (just unpack the files)"
+
+;--------------------------------
+;Callbacks
+
+Function .onInit
+  SetShellVarContext all
+FunctionEnd
+
+Function un.onInit
+  SetShellVarContext all
+FunctionEnd
+
+Function .onInstSuccess
+  IfFileExists $SYSDIR\glut32.dll Done
+    MessageBox MB_YESNO "It looks like glut32.dll is not installed.  You will not be able to use the GLUT library. Do you want to copy glut32.dll to the system directory?" IDNO Done
+        SetOutPath "$SYSDIR\."
+        File "${FILES_SOURCE_PATH}\glut32.dll"
+  Done:
+FunctionEnd
 
 ;--------------------------------
 ;Interface Settings
@@ -158,7 +166,7 @@ Section "Update the PATH environment variable" SecPath
 
 SectionEnd
 
-Section "Store GHC's location in registry"
+Section "Store GHC's location in registry" SecGHCLoc
 
   SectionIn 1
 
