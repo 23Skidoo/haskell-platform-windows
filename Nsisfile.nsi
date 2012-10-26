@@ -52,13 +52,29 @@
   InstType "Portable (just unpack the files)"
 
 ;--------------------------------
+;Macros
+
+!macro CheckAdmin thing
+UserInfo::GetAccountType
+pop $0
+${If} $0 != "admin" ;Require admin rights on NT4+
+    MessageBox MB_YESNO "It is recommended to run this ${thing} as administrator. Do you want to quit and restart the ${thing} manually with elevated privileges?" IDNO CheckAdminDone
+    SetErrorLevel 740 ;ERROR_ELEVATION_REQUIRED
+    Quit
+${EndIf}
+CheckAdminDone:
+!macroend
+
+;--------------------------------
 ;Callbacks
 
 Function .onInit
+  !insertmacro CheckAdmin "installer"
   SetShellVarContext all
 FunctionEnd
 
 Function un.onInit
+  !insertmacro CheckAdmin "uninstaller"
   SetShellVarContext all
 FunctionEnd
 
