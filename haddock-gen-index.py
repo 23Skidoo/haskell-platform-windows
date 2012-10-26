@@ -4,7 +4,7 @@ import os.path
 import subprocess
 
 # Change this to the appropriate version.
-GHC_DIR = "C:\\ghc\\ghc-7.4.1"
+GHC_DIR = "C:\\ghc\\ghc-7.4.2"
 LIB_DIR = GHC_DIR + "\\lib"
 LIB_DOC_DIR = GHC_DIR + "\\doc\\html\\libraries"
 
@@ -15,7 +15,7 @@ def get_field(pkg, fld):
 read_intf=""
 pkgs = subprocess.check_output(["ghc-pkg", "list", "--simple-output"]).split()
 for pkg in pkgs:
-    html = os.path.abspath(get_field(pkg, "haddock-html")) 
+    html = os.path.abspath(get_field(pkg, "haddock-html"))
     html = html.replace(LIB_DIR, "..\\..\\..\\lib")
     html = html.replace(LIB_DOC_DIR, ".")
     intf = os.path.abspath(get_field(pkg, "haddock-interfaces"))
@@ -33,6 +33,6 @@ for pkg in pkgs:
     if valid:
         read_intf += (" --read-interface=" + html + ","+ intf)
 
-cmd_line = ["haddock", "--gen-index", 
+cmd_line = ["haddock", "--gen-index",
             "--gen-contents", "--title=Haskell Platform"] + read_intf.split()
 subprocess.check_output(cmd_line)

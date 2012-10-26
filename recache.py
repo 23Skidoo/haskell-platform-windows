@@ -5,7 +5,7 @@ import os.path
 import fileinput
 
 # Change this to the appropriate version.
-DIR = "C:\\ghc\\ghc-7.4.1\\lib\\package.conf.d"
+DIR = "C:\\ghc\\ghc-7.4.2\\lib\\package.conf.d"
 
 FILES = [os.path.join(DIR, f) for f in os.listdir(DIR) if f.endswith("conf")]
 
