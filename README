@@ -33,11 +33,13 @@ How to make an installer
    $ cd haskell-platform
    $ git checkout pre-release
 
-5. Make sure that you have 'library-profiling' set to True, 'user-install' set to
-   False and 'documentation' set to True in $APPDATA/cabal/config.
+5. Make sure that you have 'library-profiling' set to True, 'shared' set to
+   True, 'split-objs' set to True, 'user-install' set to False, and
+   'documentation' set to True in $APPDATA/cabal/config.
 
-   Make sure that you have glut.h and libglut32.a in $GHCDIR/mingw/{include/GL,lib}
-   (can be copied from the previous Platform files).
+   Make sure that you have glut.h and libglut32.a in
+   $GHCDIR/mingw/{include/GL,lib} (can be copied from the previous Platform
+   files).
 
    In the haskell-platform directory:
    $ cabal install
@@ -51,12 +53,14 @@ $GHCDIR/{lib/extralibs/bin,lib/extralibs}.
    Run 'ghc-pkg check' to check that recaching caused no problems.
 
 8. Go to $GHCDIR/doc/html/libraries and run $THISDIR/haddock-gen-index.py
+(editing it beforehand)
 
 9. Copy the contents of $GHCDIR to $THISDIR/files & uninstall GHC.
 
    Don't forget to remove unins000.dat and unins000.exe from $THISDIR/files.
 
-10. Build winghci & put it into $THISDIR/files/winghci.
+10. Build winghci (or just copy from the previous HP files) & put it into
+$THISDIR/files/winghci.
 
     Don't forget the runtime library (depends on the Visual Studio version:
     e.g. for MSVC 9 it's msvcr900.dll, can be checked with dependency walker).
