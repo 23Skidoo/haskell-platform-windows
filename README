@@ -1,5 +1,8 @@
 Windows installer for the Haskell Platform.
 
+This is a legacy repo, most current version lives in https://github.com/haskell/haskell-platform/ 
+(specifically, https://github.com/haskell/haskell-platform/tree/master/hptool/os-extras/win).
+
 How to make an installer
 ------------------------
 
